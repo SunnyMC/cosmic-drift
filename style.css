@@ -58,11 +58,17 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    background: rgba(5, 5, 10, 0.9);
+    justify-content: flex-start;
+    padding: 2rem 1rem;
+    padding-top: max(2rem, env(safe-area-inset-top));
+    padding-bottom: max(2rem, env(safe-area-inset-bottom));
+    background: rgba(5, 5, 10, 0.95);
     backdrop-filter: blur(10px);
     z-index: 100;
     animation: fadeIn 0.5s ease-out;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
 }
 
 .screen.hidden {
@@ -685,35 +691,162 @@ body {
 /* Responsive */
 @media (max-width: 768px) {
     .game-title {
-        font-size: 2.5rem;
+        font-size: 2rem;
     }
 
     .subtitle {
-        font-size: 1rem;
-        letter-spacing: 0.2em;
+        font-size: 0.9rem;
+        letter-spacing: 0.15em;
+    }
+
+    .title-container {
+        margin-bottom: 1.5rem;
     }
 
     .instructions {
-        padding: 1rem;
+        padding: 0.8rem;
+        margin-bottom: 1rem;
+        gap: 0.5rem;
     }
 
     .instruction-item {
         flex-direction: column;
+        gap: 0.3rem;
+        font-size: 0.9rem;
+    }
+
+    .key {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.8rem;
+    }
+
+    /* Coins display mobile */
+    .coins-display-container {
+        padding: 0.5rem 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .coins-value {
+        font-size: 1.2rem;
+    }
+
+    /* Ship selection mobile */
+    .ship-selection {
+        margin-bottom: 1rem;
+    }
+
+    .selection-title {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .ships-container {
         gap: 0.5rem;
+    }
+
+    .ship-card {
+        width: 100px;
+        padding: 0.6rem;
+    }
+
+    .ship-preview {
+        width: 40px;
+        height: 40px;
+    }
+
+    .speeder-preview::before {
+        border-left: 20px solid transparent;
+        border-right: 20px solid transparent;
+        border-bottom: 35px solid #00f5ff;
+    }
+
+    .balanced-preview::before {
+        width: 30px;
+        height: 30px;
+    }
+
+    .tank-preview::before {
+        width: 32px;
+        height: 32px;
+    }
+
+    .ship-name {
+        font-size: 0.65rem;
+    }
+
+    .ship-stats {
+        font-size: 0.55rem;
+    }
+
+    .ship-price {
+        font-size: 0.6rem;
+        padding: 0.2rem 0.3rem;
+    }
+
+    /* Buttons mobile */
+    .neon-btn {
+        padding: 0.8rem 2rem;
+        font-size: 1rem;
+    }
+
+    .high-score-display {
+        font-size: 1rem;
+        margin-top: 1rem;
     }
 
     #hud {
         flex-direction: column;
-        gap: 1rem;
-        padding: 1rem;
+        gap: 0.5rem;
+        padding: 0.8rem;
     }
 
     .hud-left,
     .hud-right {
         justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .value {
+        font-size: 1.2rem;
+    }
+
+    .label {
+        font-size: 0.65rem;
     }
 
     .energy-bar {
-        width: 100px;
+        width: 80px;
+    }
+
+    .hp-hearts {
+        font-size: 1rem;
+    }
+
+    .bot-btn {
+        font-size: 0.7rem;
+        padding: 0.4rem 0.8rem;
+    }
+}
+
+/* Very small screens */
+@media (max-width: 400px) {
+    .game-title {
+        font-size: 1.6rem;
+    }
+
+    .ship-card {
+        width: 90px;
+        padding: 0.5rem;
+    }
+
+    .ship-preview {
+        width: 35px;
+        height: 35px;
+    }
+
+    .neon-btn {
+        padding: 0.6rem 1.5rem;
+        font-size: 0.9rem;
     }
 }
