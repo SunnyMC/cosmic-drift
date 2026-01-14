@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="description" content="Cosmic Drift - космическая аркада с неоновой графикой">
+    <meta name="theme-color" content="#00f5ff">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Cosmic Drift">
+    <title>Cosmic Drift - Космическая Аркада</title>
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="game-container">
+        <canvas id="gameCanvas"></canvas>
+
+        <!-- Start Screen -->
+        <div id="start-screen" class="screen">
+            <div class="title-container">
+                <h1 class="game-title">COSMIC DRIFT</h1>
+                <p class="subtitle">Навигация сквозь бездну</p>
+            </div>
+            <div class="instructions">
+                <div class="instruction-item">
+                    <span class="key">🖱️ МЫШЬ</span>
+                    <span class="desc">Корабль следует за курсором</span>
+                </div>
+                <div class="instruction-item">
+                    <span class="key">ЛКМ</span> или <span class="key">SPACE</span>
+                    <span class="desc">Ускорение</span>
+                </div>
+            </div>
+
+            <!-- Coins Display -->
+            <div class="coins-display-container">
+                <span class="coins-icon">🪙</span>
+                <span id="coins-display" class="coins-value">0</span>
+            </div>
+
+            <!-- Ship Selection -->
+            <div class="ship-selection">
+                <h3 class="selection-title">ВЫБЕРИ КОРАБЛЬ</h3>
+                <div class="ships-container">
+                    <div class="ship-card selected" data-ship="speeder">
+                        <div class="ship-preview speeder-preview"></div>
+                        <h4 class="ship-name">СКОРОСТЬ</h4>
+                        <div class="ship-stats">
+                            <div class="stat-row"><span>Скорость</span><span class="stars">★★★</span></div>
+                            <div class="stat-row"><span>Манёвр</span><span class="stars">★★☆</span></div>
+                            <div class="stat-row"><span>HP</span><span class="hearts">❤️</span></div>
+                        </div>
+                    </div>
+                    <div class="ship-card" data-ship="balanced">
+                        <div class="ship-preview balanced-preview"></div>
+                        <h4 class="ship-name">БАЛАНС</h4>
+                        <div class="ship-stats">
+                            <div class="stat-row"><span>Скорость</span><span class="stars">★★☆</span></div>
+                            <div class="stat-row"><span>Манёвр</span><span class="stars">★★☆</span></div>
+                            <div class="stat-row"><span>HP</span><span class="hearts">❤️❤️</span></div>
+                        </div>
+                    </div>
+                    <div class="ship-card" data-ship="tank">
+                        <div class="ship-preview tank-preview"></div>
+                        <h4 class="ship-name">ТАНК</h4>
+                        <div class="ship-stats">
+                            <div class="stat-row"><span>Скорость</span><span class="stars">★☆☆</span></div>
+                            <div class="stat-row"><span>Манёвр</span><span class="stars">★★★</span></div>
+                            <div class="stat-row"><span>HP</span><span class="hearts">❤️❤️❤️</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button id="start-btn" class="neon-btn">НАЧАТЬ ИГРУ</button>
+            <div class="high-score-display">
+                <span>Рекорд: </span><span id="high-score">0</span>
+            </div>
+        </div>
+
+        <!-- HUD -->
+        <div id="hud" class="hidden">
+            <div class="hud-left">
+                <div class="score-container">
+                    <span class="label">СЧЁТ</span>
+                    <span id="score" class="value">0</span>
+                </div>
+                <div class="energy-container">
+                    <span class="label">ЭНЕРГИЯ</span>
+                    <div class="energy-bar">
+                        <div id="energy-fill" class="energy-fill"></div>
+                    </div>
+                </div>
+                <div class="hp-container">
+                    <span class="label">HP</span>
+                    <div id="hp-hearts" class="hp-hearts">
+                        <span class="heart full">❤️</span>
+                        <span class="heart full">❤️</span>
+                        <span class="heart full">❤️</span>
+                    </div>
+                </div>
+                <div class="coins-hud-container">
+                    <span class="label">МОНЕТЫ</span>
+                    <span id="coins-hud" class="value coins-value">🪙 0</span>
+                </div>
+            </div>
+            <div class="hud-right">
+                <div class="level-container">
+                    <span class="label">УРОВЕНЬ</span>
+                    <span id="level" class="value">1</span>
+                </div>
+                <div class="multiplier-container">
+                    <span class="label">МНОЖИТЕЛЬ</span>
+                    <span id="multiplier" class="value">x1</span>
+                </div>
+                <button id="bot-btn" class="bot-btn">🤖 БОТ: ВЫКЛ</button>
+            </div>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div id="game-over-screen" class="screen hidden">
+            <h2 class="game-over-title">КОНЕЦ ИГРЫ</h2>
+            <div class="final-stats">
+                <div class="stat">
+                    <span class="stat-label">Итоговый счёт</span>
+                    <span id="final-score" class="stat-value">0</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Достигнутый уровень</span>
+                    <span id="final-level" class="stat-value">1</span>
+                </div>
+                <div class="stat new-record hidden" id="new-record">
+                    <span class="stat-value">🏆 НОВЫЙ РЕКОРД!</span>
+                </div>
+            </div>
+            <button id="restart-btn" class="neon-btn">ИГРАТЬ СНОВА</button>
+            <button id="menu-btn" class="neon-btn secondary">В МЕНЮ</button>
+        </div>
+
+        <!-- Pause Screen -->
+        <div id="pause-screen" class="screen hidden">
+            <h2 class="pause-title">ПАУЗА</h2>
+            <button id="resume-btn" class="neon-btn">ПРОДОЛЖИТЬ</button>
+            <button id="quit-btn" class="neon-btn secondary">ВЫЙТИ В МЕНЮ</button>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+    <script>
+        // Register Service Worker for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('Service Worker registered:', reg.scope))
+                    .catch(err => console.log('Service Worker registration failed:', err));
+            });
+        }
+    </script>
+</body>
+
+</html>
