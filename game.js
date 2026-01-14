@@ -63,8 +63,8 @@ class Game {
             speeder: {
                 name: 'СКОРОСТЬ',
                 maxSpeed: 12,
-                thrust: 0.7,
-                friction: 0.96,
+                thrust: 1.2,
+                friction: 0.85,  // Less inertia - stops faster
                 maxHP: 1,
                 color: '#00f5ff',
                 boostColor: '#00ffff',
@@ -73,8 +73,8 @@ class Game {
             balanced: {
                 name: 'БАЛАНС',
                 maxSpeed: 8,
-                thrust: 0.5,
-                friction: 0.98,
+                thrust: 1.0,
+                friction: 0.88,  // Less inertia
                 maxHP: 2,
                 color: '#8b5cf6',
                 boostColor: '#a78bfa',
@@ -83,8 +83,8 @@ class Game {
             tank: {
                 name: 'ТАНК',
                 maxSpeed: 5,
-                thrust: 0.6,
-                friction: 0.99,
+                thrust: 1.1,
+                friction: 0.90,  // Less inertia
                 maxHP: 3,
                 color: '#ff00ff',
                 boostColor: '#f97316',
